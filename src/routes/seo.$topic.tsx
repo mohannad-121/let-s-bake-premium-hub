@@ -44,7 +44,7 @@ function SeoTopicPage() {
           <h1 className="mt-5 font-display text-4xl sm:text-6xl text-chocolate-deep leading-tight">{content.title}</h1>
           <p className="mt-5 text-lg text-chocolate-deep/80">{content.intro}</p>
           <div className="mt-7 flex flex-wrap justify-center gap-2">
-            {content.keywords.map(k => <span key={k} className="rounded-full bg-cream/80 border border-border px-3 py-1 text-[11px] font-medium text-chocolate-deep">{k}</span>)}
+            {content.keywords.map((k: string) => <span key={k} className="rounded-full bg-cream/80 border border-border px-3 py-1 text-[11px] font-medium text-chocolate-deep">{k}</span>)}
           </div>
           <a href={waLink(`I'm interested in ${topic.en.title}.`)} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white shadow-soft"><MessageCircle className="h-4 w-4" /> {t("Order via WhatsApp", "اطلب عبر واتساب")}</a>
         </div>
