@@ -45,11 +45,11 @@ export function Footer() {
         <div>
           <h4 className="text-sm font-semibold uppercase tracking-wider text-gold-soft">{t("Categories", "الفئات")}</h4>
           <ul className="mt-4 space-y-2 text-sm text-cream/80">
-            <li><Link to="/products" search={{ cat: "cake-mixes" } as never} className="hover:text-gold">{t("Cake Mixes", "خلطات الكيك")}</Link></li>
-            <li><Link to="/products" search={{ cat: "creams" } as never} className="hover:text-gold">{t("Creams", "الكريمات")}</Link></li>
-            <li><Link to="/products" search={{ cat: "custard" } as never} className="hover:text-gold">{t("Custard", "الكاسترد")}</Link></li>
-            <li><Link to="/products" search={{ cat: "caramel-cream" } as never} className="hover:text-gold">{t("Caramel Cream", "كريم الكراميل")}</Link></li>
-            <li><Link to="/products" search={{ cat: "fillings" } as never} className="hover:text-gold">{t("Fillings", "الحشوات")}</Link></li>
+            <li><Link to="/products" className="hover:text-gold">{t("Cake Mixes", "خلطات الكيك")}</Link></li>
+            <li><Link to="/products" className="hover:text-gold">{t("Creams", "الكريمات")}</Link></li>
+            <li><Link to="/products" className="hover:text-gold">{t("Custard", "الكاسترد")}</Link></li>
+            <li><Link to="/products" className="hover:text-gold">{t("Caramel Cream", "كريم الكراميل")}</Link></li>
+            <li><Link to="/products" className="hover:text-gold">{t("Fillings", "الحشوات")}</Link></li>
           </ul>
         </div>
 
