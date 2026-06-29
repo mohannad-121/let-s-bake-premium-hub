@@ -213,7 +213,7 @@ export function SectionHeading({ eyebrow, title, sub, className = "" }: { eyebro
 
 function CtaCard({ icon: Icon, title, text, to, cta }: { icon: React.ComponentType<{ className?: string }>; title: string; text: string; to: string; cta: string }) {
   return (
-    <Link to={to} className="group rounded-2xl border border-border/60 bg-card p-6 shadow-soft hover:shadow-luxe transition-all hover:-translate-y-1">
+    <Link to={to as never} className="group rounded-2xl border border-border/60 bg-card p-6 shadow-soft hover:shadow-luxe transition-all hover:-translate-y-1">
       <div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-gold text-chocolate-deep"><Icon className="h-6 w-6" /></div>
       <h3 className="mt-5 font-display text-xl text-chocolate-deep">{title}</h3>
       <p className="mt-2 text-sm text-muted-foreground">{text}</p>
