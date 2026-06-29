@@ -3,7 +3,7 @@ import { ArrowLeft, MessageCircle, ShieldCheck, BadgeCheck } from "lucide-react"
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { ProductCard } from "@/components/site/ProductCard";
 import { useLang } from "@/lib/i18n";
-import { PRODUCT_IMAGE_FALLBACK, categoryLabel, productDescription, productFallbackImage, productName, productSuggestedUse, products, recipes, waLink } from "@/lib/site-data";
+import { PRODUCT_IMAGE_FALLBACK, categoryLabel, getProductImage, productDescription, productFallbackImage, productName, productSuggestedUse, products, recipes, waLink } from "@/lib/site-data";
 
 export const Route = createFileRoute("/products/$slug")({
   head: ({ params }) => {
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/products/$slug")({
         { name: "description", content: p?.descriptionEn ?? "Premium baking product from Let's Bake." },
         { property: "og:title", content: p?.nameEn ?? "Let's Bake Product" },
         { property: "og:description", content: p?.descriptionEn ?? "" },
-        ...(p ? [{ property: "og:image", content: p.image }] : []),
+        ...(p ? [{ property: "og:image", content: getProductImage(p) }] : []),
       ],
     };
   },
@@ -40,6 +40,7 @@ export const Route = createFileRoute("/products/$slug")({
 function ProductDetail() {
   const { product: p } = Route.useLoaderData();
   const { t, lang } = useLang();
+  const image = getProductImage(p);
   const related = products.filter(x => x.category === p.category && x.slug !== p.slug).slice(0, 4);
   const suggested = recipes.filter(r => r.productSlugs.includes(p.slug));
 
@@ -53,7 +54,7 @@ function ProductDetail() {
             <div className="absolute -inset-4 rounded-[2rem] bg-gradient-gold opacity-25 blur-3xl" />
             <div className="relative overflow-hidden rounded-3xl border-4 border-cream shadow-luxe bg-gradient-warm">
               <img
-                src={p.image}
+                src={image}
                 alt={productName(p, lang)}
                 className="w-full h-auto aspect-square object-cover"
                 onError={event => {

@@ -1,17 +1,18 @@
 import { Link } from "@tanstack/react-router";
 import { MessageCircle, ArrowRight } from "lucide-react";
 import type { Product } from "@/lib/site-data";
-import { categoryLabel, PRODUCT_IMAGE_FALLBACK, productDescription, productFallbackImage, productName, waLink } from "@/lib/site-data";
+import { categoryLabel, getProductImage, PRODUCT_IMAGE_FALLBACK, productDescription, productFallbackImage, productName, waLink } from "@/lib/site-data";
 import { useLang } from "@/lib/i18n";
 
 export function ProductCard({ p }: { p: Product }) {
   const { lang, t } = useLang();
   const name = productName(p, lang);
+  const image = getProductImage(p);
   return (
     <article className="group flex flex-col overflow-hidden rounded-2xl bg-card border border-border/60 shadow-soft hover:shadow-luxe transition-all duration-300 hover:-translate-y-1">
       <div className="relative aspect-[5/4] overflow-hidden bg-gradient-warm">
         <img
-          src={p.image}
+          src={image}
           alt={name}
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"

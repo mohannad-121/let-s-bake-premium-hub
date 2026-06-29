@@ -18,6 +18,7 @@ export const FACEBOOK_URL = "https://www.facebook.com/letsbakethemar";
 export const WHATSAPP_NUMBER = "962798015744";
 export const WA_BASE = `https://wa.me/${WHATSAPP_NUMBER}`;
 export const PRODUCT_IMAGE_FALLBACK = "/products/fallback-product.svg";
+const GENERATED_PRODUCT_IMAGE_BASE = "/products/generated";
 
 export function waLink(message: string) {
   return `${WA_BASE}?text=${encodeURIComponent(message)}`;
@@ -98,8 +99,51 @@ export function productSuggestedUse(p: Product, lang: "en" | "ar") {
   return lang === "ar" ? p.suggestedUseAr : p.suggestedUseEn;
 }
 
+function productSearchText(product: Product) {
+  return [
+    product.nameEn,
+    product.nameAr,
+    product.category,
+    product.line,
+    product.descriptionEn,
+    product.descriptionAr,
+    product.tags.join(" "),
+  ].join(" ").toLowerCase();
+}
+
+function includesAny(text: string, keywords: string[]) {
+  return keywords.some(keyword => text.includes(keyword.toLowerCase()));
+}
+
+export function getProductImage(product: Product) {
+  const text = productSearchText(product);
+
+  if (includesAny(text, ["red velvet", "ريد فلفت", "ريد ڤلفت"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/red-velvet.jpg`;
+  if (includesAny(text, ["chocolate", "cocoa", "brownie", "شوكولاتة", "كاكاو", "براوني"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/chocolate.jpg`;
+  if (includesAny(text, ["vanilla", "فانيلا", "فانيليا"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/vanilla.jpg`;
+  if (includesAny(text, ["strawberry", "فراولة"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/strawberry.jpg`;
+  if (includesAny(text, ["raspberry", "توت"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/raspberry.jpg`;
+  if (includesAny(text, ["cherry", "كرز"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/cherry.jpg`;
+  if (includesAny(text, ["lemon", "ليمون"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/lemon.jpg`;
+  if (includesAny(text, ["orange", "برتقال"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/orange.jpg`;
+  if (includesAny(text, ["cream caramel", "caramel", "كراميل"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/cream-caramel.jpg`;
+  if (includesAny(text, ["whipping cream", "كريمة الخفق", "كريمه الخفق"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/whipping-cream.jpg`;
+  if (includesAny(text, ["sahlab", "سحلب"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/sahlab.jpg`;
+  if (includesAny(text, ["muhalabia", "muhallabia", "مهلبية", "محلبية"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/muhalabia.jpg`;
+  if (includesAny(text, ["pancake", "waffle", "بان كيك", "وافل"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/pancake-waffle.jpg`;
+  if (includesAny(text, ["bread improver", "محسن خبز", "محسّن خبز"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/bread.jpg`;
+  if (includesAny(text, ["baking powder", "sodium bicarbonate", "gelatine powder", "corn starch", "بيكنج", "باودر", "نشا", "جيلاتين"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/baking-ingredient.jpg`;
+  if (includesAny(text, ["cookies", "cookie", "كوكيز", "بسكويت"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/cookies.jpg`;
+  if (includesAny(text, ["muffin", "مافن"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/muffin.jpg`;
+  if (includesAny(text, ["custard", "كاسترد"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/custard.jpg`;
+  if (includesAny(text, ["glaze", "جليز"])) return `${GENERATED_PRODUCT_IMAGE_BASE}/glaze.jpg`;
+  if (product.category === "cake-mixes") return `${GENERATED_PRODUCT_IMAGE_BASE}/cake-mix.jpg`;
+
+  return categoryFallback[product.category] ?? PRODUCT_IMAGE_FALLBACK;
+}
+
 export function productFallbackImage(p: Product) {
-  return categoryFallback[p.category] ?? PRODUCT_IMAGE_FALLBACK;
+  return getProductImage(p) || PRODUCT_IMAGE_FALLBACK;
 }
 
 function slugify(value: string) {
