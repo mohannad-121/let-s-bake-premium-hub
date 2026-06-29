@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WholesaleRouteImport } from './routes/wholesale'
 import { Route as WhereToBuyRouteImport } from './routes/where-to-buy'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RecipesRouteImport } from './routes/recipes'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -29,6 +30,11 @@ const WholesaleRoute = WholesaleRouteImport.update({
 const WhereToBuyRoute = WhereToBuyRouteImport.update({
   id: '/where-to-buy',
   path: '/where-to-buy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RecipesRoute = RecipesRouteImport.update({
@@ -85,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/products': typeof ProductsRouteWithChildren
   '/recipes': typeof RecipesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/where-to-buy': typeof WhereToBuyRoute
   '/wholesale': typeof WholesaleRoute
   '/products/$slug': typeof ProductsSlugRoute
@@ -98,6 +105,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/products': typeof ProductsRouteWithChildren
   '/recipes': typeof RecipesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/where-to-buy': typeof WhereToBuyRoute
   '/wholesale': typeof WholesaleRoute
   '/products/$slug': typeof ProductsSlugRoute
@@ -112,6 +120,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/products': typeof ProductsRouteWithChildren
   '/recipes': typeof RecipesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/where-to-buy': typeof WhereToBuyRoute
   '/wholesale': typeof WholesaleRoute
   '/products/$slug': typeof ProductsSlugRoute
@@ -127,6 +136,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/products'
     | '/recipes'
+    | '/sitemap.xml'
     | '/where-to-buy'
     | '/wholesale'
     | '/products/$slug'
@@ -140,6 +150,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/products'
     | '/recipes'
+    | '/sitemap.xml'
     | '/where-to-buy'
     | '/wholesale'
     | '/products/$slug'
@@ -153,6 +164,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/products'
     | '/recipes'
+    | '/sitemap.xml'
     | '/where-to-buy'
     | '/wholesale'
     | '/products/$slug'
@@ -167,6 +179,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   ProductsRoute: typeof ProductsRouteWithChildren
   RecipesRoute: typeof RecipesRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   WhereToBuyRoute: typeof WhereToBuyRoute
   WholesaleRoute: typeof WholesaleRoute
   SeoTopicRoute: typeof SeoTopicRoute
@@ -186,6 +199,13 @@ declare module '@tanstack/react-router' {
       path: '/where-to-buy'
       fullPath: '/where-to-buy'
       preLoaderRoute: typeof WhereToBuyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recipes': {
@@ -274,6 +294,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   ProductsRoute: ProductsRouteWithChildren,
   RecipesRoute: RecipesRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   WhereToBuyRoute: WhereToBuyRoute,
   WholesaleRoute: WholesaleRoute,
   SeoTopicRoute: SeoTopicRoute,
