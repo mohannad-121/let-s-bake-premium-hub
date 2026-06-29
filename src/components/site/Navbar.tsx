@@ -20,11 +20,13 @@ export function Navbar() {
     { to: "/", label: t("Home", "الرئيسية") },
     { to: "/products", label: t("Products", "المنتجات") },
     { to: "/recipes", label: t("Recipes", "الوصفات") },
+    { to: "/reels", label: t("Reels", "ريلز") },
     { to: "/wholesale", label: t("Wholesale", "الجملة") },
     { to: "/where-to-buy", label: t("Where to Buy", "أين تشتري") },
     { to: "/catalogues", label: t("Catalogues", "الكتالوجات") },
     { to: "/about", label: t("About", "من نحن") },
     { to: "/contact", label: t("Contact", "اتصل بنا") },
+    { to: "/admin", label: t("Admin", "الإدارة") },
   ];
 
   return (

@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WholesaleRouteImport } from './routes/wholesale'
 import { Route as WhereToBuyRouteImport } from './routes/where-to-buy'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ReelsRouteImport } from './routes/reels'
 import { Route as RecipesRouteImport } from './routes/recipes'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -35,6 +36,11 @@ const WhereToBuyRoute = WhereToBuyRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReelsRoute = ReelsRouteImport.update({
+  id: '/reels',
+  path: '/reels',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RecipesRoute = RecipesRouteImport.update({
@@ -91,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/products': typeof ProductsRouteWithChildren
   '/recipes': typeof RecipesRoute
+  '/reels': typeof ReelsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/where-to-buy': typeof WhereToBuyRoute
   '/wholesale': typeof WholesaleRoute
@@ -105,6 +112,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/products': typeof ProductsRouteWithChildren
   '/recipes': typeof RecipesRoute
+  '/reels': typeof ReelsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/where-to-buy': typeof WhereToBuyRoute
   '/wholesale': typeof WholesaleRoute
@@ -120,6 +128,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/products': typeof ProductsRouteWithChildren
   '/recipes': typeof RecipesRoute
+  '/reels': typeof ReelsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/where-to-buy': typeof WhereToBuyRoute
   '/wholesale': typeof WholesaleRoute
@@ -136,6 +145,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/products'
     | '/recipes'
+    | '/reels'
     | '/sitemap.xml'
     | '/where-to-buy'
     | '/wholesale'
@@ -150,6 +160,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/products'
     | '/recipes'
+    | '/reels'
     | '/sitemap.xml'
     | '/where-to-buy'
     | '/wholesale'
@@ -164,6 +175,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/products'
     | '/recipes'
+    | '/reels'
     | '/sitemap.xml'
     | '/where-to-buy'
     | '/wholesale'
@@ -179,6 +191,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   ProductsRoute: typeof ProductsRouteWithChildren
   RecipesRoute: typeof RecipesRoute
+  ReelsRoute: typeof ReelsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   WhereToBuyRoute: typeof WhereToBuyRoute
   WholesaleRoute: typeof WholesaleRoute
@@ -206,6 +219,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reels': {
+      id: '/reels'
+      path: '/reels'
+      fullPath: '/reels'
+      preLoaderRoute: typeof ReelsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recipes': {
@@ -294,6 +314,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   ProductsRoute: ProductsRouteWithChildren,
   RecipesRoute: RecipesRoute,
+  ReelsRoute: ReelsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   WhereToBuyRoute: WhereToBuyRoute,
   WholesaleRoute: WholesaleRoute,
@@ -302,3 +323,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, MessageCircle, Phone, Mail, MapPin } from "lucide-react";
 import { useLang } from "@/lib/i18n";
-import { WA_BASE } from "@/lib/site-data";
+import { COMPANY_EMAIL, COMPANY_LOCATION_TEXT, COMPANY_PHONE_INTERNATIONAL, COMPANY_PHONE_LOCAL, FACEBOOK_URL, WA_BASE } from "@/lib/site-data";
 
 export function Footer() {
   const { t } = useLang();
@@ -27,7 +27,7 @@ export function Footer() {
           <div className="mt-5 flex gap-2">
             <a href={WA_BASE} className="grid h-9 w-9 place-items-center rounded-full bg-cream/10 hover:bg-gold transition-colors" aria-label="WhatsApp"><MessageCircle className="h-4 w-4" /></a>
             <a href="#" className="grid h-9 w-9 place-items-center rounded-full bg-cream/10 hover:bg-gold transition-colors" aria-label="Instagram"><Instagram className="h-4 w-4" /></a>
-            <a href="#" className="grid h-9 w-9 place-items-center rounded-full bg-cream/10 hover:bg-gold transition-colors" aria-label="Facebook"><Facebook className="h-4 w-4" /></a>
+            <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="grid h-9 w-9 place-items-center rounded-full bg-cream/10 hover:bg-gold transition-colors" aria-label="Facebook"><Facebook className="h-4 w-4" /></a>
           </div>
         </div>
 
@@ -36,6 +36,7 @@ export function Footer() {
           <ul className="mt-4 space-y-2 text-sm text-cream/80">
             <li><Link to="/products" className="hover:text-gold">{t("Products", "المنتجات")}</Link></li>
             <li><Link to="/recipes" className="hover:text-gold">{t("Recipes", "الوصفات")}</Link></li>
+            <li><Link to="/reels" className="hover:text-gold">{t("Reels", "ريلز")}</Link></li>
             <li><Link to="/wholesale" className="hover:text-gold">{t("Wholesale", "الجملة")}</Link></li>
             <li><Link to="/where-to-buy" className="hover:text-gold">{t("Where to Buy", "أين تشتري")}</Link></li>
             <li><Link to="/catalogues" className="hover:text-gold">{t("Catalogues", "الكتالوجات")}</Link></li>
@@ -56,9 +57,9 @@ export function Footer() {
         <div>
           <h4 className="text-sm font-semibold uppercase tracking-wider text-gold-soft">{t("Contact", "تواصل")}</h4>
           <ul className="mt-4 space-y-3 text-sm text-cream/80">
-            <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 text-gold" /><span>Amman, Jordan</span></li>
-            <li className="flex items-start gap-2"><Phone className="h-4 w-4 mt-0.5 text-gold" /><span dir="ltr">+962 79 000 0000</span></li>
-            <li className="flex items-start gap-2"><Mail className="h-4 w-4 mt-0.5 text-gold" /><span>info@letsbake.jo</span></li>
+            <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 text-gold" /><span>{COMPANY_LOCATION_TEXT}</span></li>
+            <li className="flex items-start gap-2"><Phone className="h-4 w-4 mt-0.5 text-gold" /><a href={`tel:${COMPANY_PHONE_INTERNATIONAL}`} dir="ltr" className="hover:text-gold">{COMPANY_PHONE_LOCAL}</a></li>
+            <li className="flex items-start gap-2"><Mail className="h-4 w-4 mt-0.5 text-gold" /><a href={`mailto:${COMPANY_EMAIL}`} className="hover:text-gold">{COMPANY_EMAIL}</a></li>
           </ul>
         </div>
       </div>

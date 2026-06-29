@@ -40,9 +40,10 @@ function CataloguesPage() {
             </div>
             <div className="flex flex-1 flex-col p-5">
               <p className="text-sm text-muted-foreground flex-1">{c.desc[lang]}</p>
+              <p className="mt-3 text-[11px] font-semibold uppercase tracking-wider text-caramel">{c.sourceLabel}</p>
+              {c.todo && <p className="mt-2 text-xs text-muted-foreground">{c.todo}</p>}
               <div className="mt-4 flex flex-col gap-2">
-                {/* TODO: replace with real PDF link */}
-                <a href="#" className="inline-flex items-center justify-center gap-2 rounded-full bg-chocolate px-4 py-2.5 text-xs font-semibold text-cream hover:bg-chocolate-deep"><Download className="h-3.5 w-3.5" />{t("Download PDF", "حمّل PDF")}</a>
+                <a href={c.href} className="inline-flex items-center justify-center gap-2 rounded-full bg-chocolate px-4 py-2.5 text-xs font-semibold text-cream hover:bg-chocolate-deep"><Download className="h-3.5 w-3.5" />{t("Download PDF", "حمّل PDF")}</a>
                 <a href={waLink(`Please send the updated ${c.title.en}.`)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-4 py-2.5 text-xs font-semibold text-chocolate-deep hover:bg-gold-soft"><RefreshCw className="h-3.5 w-3.5" />{t("Request Updated", "اطلب المحدّث")}</a>
               </div>
             </div>

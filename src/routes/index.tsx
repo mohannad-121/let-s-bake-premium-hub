@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, MessageCircle, ShieldCheck, Sparkles, Truck, Award, ChefHat, Download, MapPin } from "lucide-react";
+import { ArrowRight, MessageCircle, ShieldCheck, Sparkles, Truck, Award, ChefHat, Download, MapPin, Settings } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { ProductCard } from "@/components/site/ProductCard";
+import { ReelsSection } from "@/components/site/ReelsSection";
 import { useLang } from "@/lib/i18n";
 import { categories, products, recipes, waLink } from "@/lib/site-data";
 import heroImg from "@/assets/hero.jpg";
@@ -170,6 +171,8 @@ function Index() {
         </div>
       </section>
 
+      <ReelsSection limit={6} />
+
       {/* B2B BANNER */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-3xl bg-gradient-rich p-10 sm:p-16 text-cream shadow-luxe">
@@ -190,10 +193,11 @@ function Index() {
       </section>
 
       {/* WHERE / CATALOGUE / CONTACT cards */}
-      <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8 grid gap-6 md:grid-cols-3">
+      <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <CtaCard icon={MapPin} title={t("Where to Buy", "أين تشتري")} text={t("Find Let's Bake at distributors and stores across Jordan.", "اعثر على منتجاتنا لدى الموزعين والمحلات.")} to="/where-to-buy" cta={t("Find a store", "اعثر على محل")} />
         <CtaCard icon={Download} title={t("Download Catalogues", "حمّل الكتالوجات")} text={t("Retail, wholesale and company profile PDFs.", "كتالوجات التجزئة والجملة وملف الشركة.")} to="/catalogues" cta={t("View catalogues", "عرض الكتالوجات")} />
         <CtaCard icon={MessageCircle} title={t("Contact & Orders", "التواصل والطلبات")} text={t("Reach our team or order directly on WhatsApp.", "تواصل مع فريقنا أو اطلب مباشرة عبر واتساب.")} to="/contact" cta={t("Get in touch", "تواصل معنا")} />
+        <CtaCard icon={Settings} title={t("Admin Panel", "لوحة الإدارة")} text={t("Manage products, recipes, catalogues and website content.", "إدارة المنتجات والوصفات والكتالوجات ومحتوى الموقع.")} to="/admin" cta={t("Open admin", "فتح لوحة الإدارة")} />
       </section>
     </SiteLayout>
   );

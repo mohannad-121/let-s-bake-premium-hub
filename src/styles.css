@@ -59,14 +59,14 @@
 
 :root {
   --radius: 0.875rem;
-  /* Brand palette: cream, ivory, chocolate, caramel, gold */
-  --cream: oklch(0.972 0.018 80);
-  --ivory: oklch(0.985 0.012 85);
-  --chocolate: oklch(0.32 0.055 45);
-  --chocolate-deep: oklch(0.22 0.045 40);
-  --caramel: oklch(0.62 0.13 55);
-  --gold: oklch(0.78 0.13 80);
-  --gold-soft: oklch(0.88 0.07 85);
+  /* Let’s Bake catalogue palette: deep purple, gold, cream, ivory and chocolate. */
+  --cream: #FFF8EC;
+  --ivory: #FFFDF8;
+  --chocolate: #7A3F86;
+  --chocolate-deep: #5B2B66;
+  --caramel: #3B2416;
+  --gold: #F2C230;
+  --gold-soft: #F8E4A1;
 
   --background: var(--ivory);
   --foreground: var(--chocolate-deep);
@@ -78,14 +78,14 @@
   --primary-foreground: var(--ivory);
   --secondary: var(--cream);
   --secondary-foreground: var(--chocolate-deep);
-  --muted: oklch(0.95 0.018 80);
-  --muted-foreground: oklch(0.45 0.03 50);
+  --muted: #F6EFE3;
+  --muted-foreground: #6B6B6B;
   --accent: var(--gold);
   --accent-foreground: var(--chocolate-deep);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.9 0.025 70);
-  --input: oklch(0.92 0.02 70);
+  --border: #E8D9C2;
+  --input: #E8D9C2;
   --ring: var(--gold);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -101,12 +101,12 @@
   --sidebar-border: oklch(0.9 0.025 70);
   --sidebar-ring: var(--gold);
 
-  --gradient-warm: linear-gradient(135deg, var(--cream) 0%, var(--gold-soft) 100%);
-  --gradient-rich: linear-gradient(140deg, var(--chocolate-deep) 0%, var(--chocolate) 60%, var(--caramel) 100%);
+  --gradient-warm: linear-gradient(135deg, var(--ivory) 0%, var(--cream) 56%, #F9E7B0 100%);
+  --gradient-rich: linear-gradient(140deg, var(--chocolate-deep) 0%, var(--chocolate) 68%, #3B2416 100%);
   --gradient-gold: linear-gradient(135deg, var(--gold) 0%, var(--caramel) 100%);
-  --shadow-soft: 0 6px 24px -8px oklch(0.32 0.055 45 / 0.18);
-  --shadow-luxe: 0 24px 60px -20px oklch(0.32 0.055 45 / 0.35);
-  --shadow-gold: 0 12px 32px -12px oklch(0.78 0.13 80 / 0.45);
+  --shadow-soft: 0 6px 24px -8px rgb(91 43 102 / 0.2);
+  --shadow-luxe: 0 24px 60px -20px rgb(91 43 102 / 0.38);
+  --shadow-gold: 0 12px 32px -12px rgb(242 194 48 / 0.5);
 }
 
 .dark {
@@ -145,7 +145,7 @@
 
   h1, h2, h3, h4, .font-display {
     font-family: var(--font-display);
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
   }
 
   [dir="rtl"] body, [lang="ar"] body {

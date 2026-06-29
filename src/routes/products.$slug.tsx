@@ -3,17 +3,17 @@ import { ArrowLeft, MessageCircle, ShieldCheck, BadgeCheck } from "lucide-react"
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { ProductCard } from "@/components/site/ProductCard";
 import { useLang } from "@/lib/i18n";
-import { categoryLabel, products, recipes, waLink } from "@/lib/site-data";
+import { PRODUCT_IMAGE_FALLBACK, categoryLabel, productDescription, productFallbackImage, productName, productSuggestedUse, products, recipes, waLink } from "@/lib/site-data";
 
 export const Route = createFileRoute("/products/$slug")({
   head: ({ params }) => {
     const p = products.find(x => x.slug === params.slug);
     return {
       meta: [
-        { title: p ? `${p.name.en} — Let's Bake` : "Product — Let's Bake" },
-        { name: "description", content: p?.description.en ?? "Premium baking product from Let's Bake." },
-        { property: "og:title", content: p?.name.en ?? "Let's Bake Product" },
-        { property: "og:description", content: p?.description.en ?? "" },
+        { title: p ? `${p.nameEn} — Let's Bake` : "Product — Let's Bake" },
+        { name: "description", content: p?.descriptionEn ?? "Premium baking product from Let's Bake." },
+        { property: "og:title", content: p?.nameEn ?? "Let's Bake Product" },
+        { property: "og:description", content: p?.descriptionEn ?? "" },
         ...(p ? [{ property: "og:image", content: p.image }] : []),
       ],
     };
@@ -52,34 +52,49 @@ function ProductDetail() {
           <div className="relative">
             <div className="absolute -inset-4 rounded-[2rem] bg-gradient-gold opacity-25 blur-3xl" />
             <div className="relative overflow-hidden rounded-3xl border-4 border-cream shadow-luxe bg-gradient-warm">
-              <img src={p.image} alt={p.name[lang]} className="w-full h-auto aspect-square object-cover" />
+              <img
+                src={p.image}
+                alt={productName(p, lang)}
+                className="w-full h-auto aspect-square object-cover"
+                onError={event => {
+                  const image = event.currentTarget;
+                  image.onerror = null;
+                  image.src = productFallbackImage(p) || PRODUCT_IMAGE_FALLBACK;
+                }}
+              />
             </div>
           </div>
 
           <div>
-            <span className="inline-block rounded-full bg-gold-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-chocolate-deep">{categoryLabel(p.category, lang)}</span>
-            <h1 className="mt-4 font-display text-4xl sm:text-5xl text-chocolate-deep leading-tight">{p.name[lang]}</h1>
+            <div className="flex flex-wrap gap-2">
+              <span className="inline-block rounded-full bg-gold-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-chocolate-deep">{categoryLabel(p.category, lang)}</span>
+              <span className="inline-block rounded-full bg-gradient-rich px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-cream">{p.line}</span>
+            </div>
+            <h1 className="mt-4 font-display text-4xl sm:text-5xl text-chocolate-deep leading-tight">{productName(p, lang)}</h1>
+            <p className="mt-2 text-xl text-chocolate-deep/70" dir="rtl">{p.nameAr}</p>
             <div className="mt-3 flex items-center gap-3 text-sm">
               <span className="font-semibold text-caramel">{p.weight}</span>
-              <span className="text-muted-foreground">•</span>
+              <span className="text-muted-foreground">/</span>
               <span className="inline-flex items-center gap-1 text-muted-foreground"><BadgeCheck className="h-4 w-4 text-gold" /> {t("Quality verified", "جودة موثقة")}</span>
             </div>
-            <p className="mt-6 text-base text-chocolate-deep/80 leading-relaxed">{p.description[lang]}</p>
+            <p className="mt-6 text-base text-chocolate-deep/80 leading-relaxed">{productDescription(p, lang)}</p>
 
             <div className="mt-6 rounded-2xl border border-border bg-cream/60 p-5">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-caramel">{t("Usage Instructions", "تعليمات الاستخدام")}</h3>
-              <p className="mt-2 text-sm text-chocolate-deep/80">{p.usage[lang]}</p>
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-caramel">{t("Suggested Use", "الاستخدام المقترح")}</h3>
+              <p className="mt-2 text-sm text-chocolate-deep/80">{productSuggestedUse(p, lang)}</p>
             </div>
 
             <div className="mt-6 flex flex-wrap gap-3">
-              <a href={waLink(`Hi! I'd like to order ${p.name.en} (${p.weight}). Barcode: ${p.barcode}`)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white shadow-soft hover:shadow-luxe"><MessageCircle className="h-4 w-4" /> {t("Order via WhatsApp", "اطلب عبر واتساب")}</a>
-              <a href={waLink(`Hi! I'd like wholesale pricing for ${p.name.en}.`)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-gradient-rich px-6 py-3 text-sm font-semibold text-cream shadow-soft hover:shadow-luxe">{t("Ask for Wholesale Price", "اسأل عن سعر الجملة")}</a>
+              <a href={waLink(p.whatsappMessage)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white shadow-soft hover:shadow-luxe"><MessageCircle className="h-4 w-4" /> {t("Order via WhatsApp", "اطلب عبر واتساب")}</a>
+              {p.line === "Catering" && (
+                <a href={waLink(`Hello, I would like a wholesale quotation for ${p.nameEn} (${p.weight}) from Let's Bake.`)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-gradient-rich px-6 py-3 text-sm font-semibold text-cream shadow-soft hover:shadow-luxe">{t("Wholesale Request", "طلب جملة")}</a>
+              )}
             </div>
 
             <div className="mt-6 flex items-center gap-2 text-xs text-muted-foreground">
               <ShieldCheck className="h-4 w-4 text-gold" />
-              <span>{t("Barcode:", "الباركود:")}</span>
-              <span dir="ltr" className="font-mono">{p.barcode}</span>
+              <span>{t("Catalogue line:", "خط الكتالوج:")}</span>
+              <span dir="ltr" className="font-semibold">{p.line} / {p.weight}</span>
             </div>
           </div>
         </div>
@@ -93,7 +108,7 @@ function ProductDetail() {
                   <div className="aspect-[4/3] overflow-hidden"><img src={r.image} alt={r.title[lang]} loading="lazy" className="h-full w-full object-cover" /></div>
                   <div className="p-5">
                     <h3 className="font-display text-lg text-chocolate-deep">{r.title[lang]}</h3>
-                    <p className="mt-1 text-xs text-caramel font-semibold">{r.level[lang]} • {r.time}</p>
+                    <p className="mt-1 text-xs text-caramel font-semibold">{r.level[lang]} / {r.time}</p>
                   </div>
                 </article>
               ))}

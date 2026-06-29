@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="768" viewBox="0 0 960 768" role="img" aria-label="Let's Bake product image placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#FFF8EC"/>
+      <stop offset="0.55" stop-color="#FFFDF8"/>
+      <stop offset="1" stop-color="#F2C230"/>
+    </linearGradient>
+    <linearGradient id="pack" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#7A3F86"/>
+      <stop offset="1" stop-color="#5B2B66"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="768" fill="url(#bg)"/>
+  <path d="M0 650 C180 590 300 700 480 638 C645 580 760 614 960 548 L960 768 L0 768 Z" fill="#7A3F86" opacity=".12"/>
+  <rect x="314" y="130" width="332" height="470" rx="34" fill="url(#pack)" filter="drop-shadow(0 28px 36px rgba(59,36,22,.25))"/>
+  <path d="M346 180 H614" stroke="#F2C230" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="480" cy="328" r="104" fill="#FFF8EC"/>
+  <path d="M424 334 C438 288 463 268 500 276 C541 285 554 320 538 358 C522 394 476 414 431 384" fill="none" stroke="#7A3F86" stroke-width="18" stroke-linecap="round"/>
+  <text x="480" y="482" text-anchor="middle" font-family="Georgia, serif" font-size="58" font-weight="700" fill="#FFF8EC">Let's Bake</text>
+  <text x="480" y="526" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" letter-spacing="4" fill="#F2C230">PRODUCT IMAGE</text>
+</svg>

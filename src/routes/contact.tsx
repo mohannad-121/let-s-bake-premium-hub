@@ -2,11 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
-import { Phone, Mail, MapPin, Clock, MessageCircle, Facebook, Instagram } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, MessageCircle, Facebook } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { SectionHeading } from "./index";
 import { useLang } from "@/lib/i18n";
-import { WA_BASE } from "@/lib/site-data";
+import { COMPANY_COORDINATES, COMPANY_EMAIL, COMPANY_LOCATION_TEXT, COMPANY_PHONE_INTERNATIONAL, COMPANY_PHONE_LOCAL, FACEBOOK_URL, WA_BASE } from "@/lib/site-data";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -29,6 +29,7 @@ const schema = z.object({
 
 function ContactPage() {
   const { t } = useLang();
+  const mapSrc = `https://www.google.com/maps?q=${COMPANY_COORDINATES.lat},${COMPANY_COORDINATES.lng}&z=16&output=embed`;
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,28 +51,37 @@ function ContactPage() {
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 grid gap-10 lg:grid-cols-[1fr_1.2fr]">
         <div className="space-y-4">
           {[
-            { icon: MapPin, l: t("Location", "الموقع"), v: t("Amman, Jordan", "عمان، الأردن") },
-            { icon: Phone, l: t("Phone", "الهاتف"), v: "+962 79 000 0000" },
-            { icon: Mail, l: t("Email", "البريد الإلكتروني"), v: "info@letsbake.jo" },
+            { icon: MapPin, l: t("Location", "الموقع"), v: t(COMPANY_LOCATION_TEXT, "عمان، الأردن"), href: `https://maps.google.com/?q=${COMPANY_COORDINATES.lat},${COMPANY_COORDINATES.lng}` },
+            { icon: Phone, l: t("Phone", "الهاتف"), v: COMPANY_PHONE_LOCAL, href: `tel:${COMPANY_PHONE_INTERNATIONAL}` },
+            { icon: Mail, l: t("Email", "البريد الإلكتروني"), v: COMPANY_EMAIL, href: `mailto:${COMPANY_EMAIL}` },
             { icon: Clock, l: t("Business Hours", "ساعات العمل"), v: t("Sun – Thu: 9:00 – 18:00", "الأحد – الخميس: 9:00 – 18:00") },
           ].map((b, i) => (
             <div key={i} className="flex items-start gap-4 rounded-2xl border border-border/60 bg-card p-5 shadow-soft">
               <div className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-gold text-chocolate-deep shrink-0"><b.icon className="h-5 w-5" /></div>
               <div className="min-w-0">
                 <div className="text-xs font-semibold uppercase tracking-wider text-caramel">{b.l}</div>
-                <div className="text-base text-chocolate-deep" dir={b.l === t("Phone", "الهاتف") || b.l === t("Email", "البريد الإلكتروني") ? "ltr" : undefined}>{b.v}</div>
+                {b.href ? (
+                  <a href={b.href} target={b.href.startsWith("http") ? "_blank" : undefined} rel={b.href.startsWith("http") ? "noopener noreferrer" : undefined} className="text-base text-chocolate-deep hover:text-chocolate" dir={b.l === t("Phone", "الهاتف") || b.l === t("Email", "البريد الإلكتروني") ? "ltr" : undefined}>{b.v}</a>
+                ) : (
+                  <div className="text-base text-chocolate-deep">{b.v}</div>
+                )}
               </div>
             </div>
           ))}
 
           <div className="flex flex-wrap gap-3 pt-2">
             <a href={WA_BASE} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-sm font-semibold text-white shadow-soft"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
-            <a href="#" className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-3 text-sm font-semibold text-chocolate-deep"><Instagram className="h-4 w-4" /> Instagram</a>
-            <a href="#" className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-3 text-sm font-semibold text-chocolate-deep"><Facebook className="h-4 w-4" /> Facebook</a>
+            <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-3 text-sm font-semibold text-chocolate-deep hover:bg-gold-soft"><Facebook className="h-4 w-4" /> Facebook</a>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-border bg-gradient-warm aspect-[16/9] grid place-items-center">
-            <div className="text-center p-6"><MapPin className="h-10 w-10 text-chocolate mx-auto" /><p className="mt-2 text-sm text-muted-foreground">{t("Google Maps placeholder", "موضع خرائط جوجل")}</p></div>
+          <div className="overflow-hidden rounded-2xl border border-chocolate/20 bg-gradient-rich p-[2px] shadow-luxe">
+            <iframe
+              title="Let’s Bake location map"
+              src={mapSrc}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="aspect-[16/9] w-full rounded-[calc(1rem-2px)] border-0 bg-cream"
+            />
           </div>
         </div>
 

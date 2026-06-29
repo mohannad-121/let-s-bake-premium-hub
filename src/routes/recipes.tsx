@@ -3,7 +3,7 @@ import { MessageCircle, Clock, ChefHat } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { SectionHeading } from "./index";
 import { useLang } from "@/lib/i18n";
-import { products, recipes, waLink } from "@/lib/site-data";
+import { productName, products, recipes, waLink } from "@/lib/site-data";
 
 export const Route = createFileRoute("/recipes")({
   head: () => ({
@@ -41,11 +41,12 @@ function RecipesPage() {
               </div>
               <div className="flex flex-1 flex-col p-6">
                 <h3 className="font-display text-2xl text-chocolate-deep">{r.title[lang]}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{r.description[lang]}</p>
                 <div className="mt-3">
                   <div className="text-[11px] font-semibold uppercase tracking-wider text-caramel">{t("Products used", "المنتجات المستخدمة")}</div>
                   <ul className="mt-2 flex flex-wrap gap-1.5">
                     {used.map(u => (
-                      <li key={u.slug}><Link to="/products/$slug" params={{ slug: u.slug }} className="inline-block rounded-full bg-gold-soft px-2.5 py-1 text-[11px] font-medium text-chocolate-deep hover:bg-gold">{u.name[lang]}</Link></li>
+                      <li key={u.slug}><Link to="/products/$slug" params={{ slug: u.slug }} className="inline-block rounded-full bg-gold-soft px-2.5 py-1 text-[11px] font-medium text-chocolate-deep hover:bg-gold">{productName(u, lang)}</Link></li>
                     ))}
                   </ul>
                 </div>
@@ -53,7 +54,7 @@ function RecipesPage() {
                   {r.steps[lang].map((s, i) => <li key={i}>{s}</li>)}
                 </ol>
                 <div className="mt-5 flex gap-2">
-                  <a href={waLink(`Please send me the ingredients for ${r.title.en}: ${used.map(u => u.name.en).join(", ")}.`)} target="_blank" rel="noopener noreferrer" className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-full bg-[#25D366] px-3 py-2.5 text-xs font-semibold text-white"><MessageCircle className="h-3.5 w-3.5" />{t("Order Ingredients", "اطلب المكونات")}</a>
+                  <a href={waLink(`Please send me the ingredients for ${r.title.en}: ${used.map(u => u.nameEn).join(", ")}.`)} target="_blank" rel="noopener noreferrer" className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-full bg-[#25D366] px-3 py-2.5 text-xs font-semibold text-white"><MessageCircle className="h-3.5 w-3.5" />{t("Order Ingredients on WhatsApp", "اطلب المكونات عبر واتساب")}</a>
                 </div>
               </div>
             </article>
